@@ -1,0 +1,3106 @@
+
+Certainly! Here’s a list of 20 Python questions and their solutions related to Data Structures and Algorithms (DAA), each with specific values for clarity.
+
+### 1. **Arrays**
+
+1. **Find the largest element in an array.**
+   ```python
+   def find_max(arr):
+       return max(arr)
+
+   # Example
+   arr = [3, 5, 7, 2, 8]
+   print(find_max(arr))  # Output: 8
+   ```
+
+2. **Find the second largest element in an array.**
+   ```python
+   def find_second_largest(arr):
+       first, second = float('-inf'), float('-inf')
+       for num in arr:
+           if num > first:
+               second = first
+               first = num
+           elif num > second and num != first:
+               second = num
+       return second
+
+   # Example
+   arr = [3, 5, 7, 2, 8]
+   print(find_second_largest(arr))  # Output: 7
+   ```
+
+3. **Implement binary search algorithm.**
+   ```python
+   def binary_search(arr, target):
+       left, right = 0, len(arr) - 1
+       while left <= right:
+           mid = (left + right) // 2
+           if arr[mid] == target:
+               return mid
+           elif arr[mid] < target:
+               left = mid + 1
+           else:
+               right = mid - 1
+       return -1
+
+   # Example
+   arr = [1, 3, 5, 7, 9]
+   target = 7
+   print(binary_search(arr, target))  # Output: 3
+   ```
+
+4. **Sort an array using bubble sort.**
+   ```python
+   def bubble_sort(arr):
+       n = len(arr)
+       for i in range(n):
+           for j in range(0, n-i-1):
+               if arr[j] > arr[j+1]:
+                   arr[j], arr[j+1] = arr[j+1], arr[j]
+       return arr
+
+   # Example
+   arr = [64, 34, 25, 12, 22, 11, 90]
+   print(bubble_sort(arr))  # Output: [11, 12, 22, 25, 34, 64, 90]
+   ```
+
+5. **Reverse an array in place.**
+   ```python
+   def reverse_array(arr):
+       return arr[::-1]
+
+   # Example
+   arr = [1, 2, 3, 4, 5]
+   print(reverse_array(arr))  # Output: [5, 4, 3, 2, 1]
+   ```
+
+### 2. **Linked Lists**
+
+6. **Implement a singly linked list with basic operations (insert, delete, traverse).**
+   ```python
+   class Node:
+       def __init__(self, data):
+           self.data = data
+           self.next = None
+
+   class LinkedList:
+       def __init__(self):
+           self.head = None
+
+       def append(self, data):
+           new_node = Node(data)
+           if not self.head:
+               self.head = new_node
+               return
+           last = self.head
+           while last.next:
+               last = last.next
+           last.next = new_node
+
+       def print_list(self):
+           current = self.head
+           while current:
+               print(current.data, end=" -> ")
+               current = current.next
+           print("None")
+
+   # Example
+   ll = LinkedList()
+   ll.append(1)
+   ll.append(2)
+   ll.append(3)
+   ll.print_list()  # Output: 1 -> 2 -> 3 -> None
+   ```
+
+7. **Detect a loop in a linked list.**
+   ```python
+   def has_cycle(head):
+       slow, fast = head, head
+       while fast and fast.next:
+           slow = slow.next
+           fast = fast.next.next
+           if slow == fast:
+               return True
+       return False
+
+   # Example
+   node1 = Node(1)
+   node2 = Node(2)
+   node3 = Node(3)
+   node4 = Node(4)
+   node1.next = node2
+   node2.next = node3
+   node3.next = node4
+   node4.next = node2  # Creates a cycle
+   print(has_cycle(node1))  # Output: True
+   ```
+
+### 3. **Stacks and Queues**
+
+8. **Implement a stack using lists.**
+   ```python
+   class Stack:
+       def __init__(self):
+           self.stack = []
+
+       def push(self, item):
+           self.stack.append(item)
+
+       def pop(self):
+           if not self.is_empty():
+               return self.stack.pop()
+           raise IndexError("Pop from an empty stack")
+
+       def is_empty(self):
+           return len(self.stack) == 0
+
+       def peek(self):
+           if not self.is_empty():
+               return self.stack[-1]
+           raise IndexError("Peek from an empty stack")
+
+   # Example
+   s = Stack()
+   s.push(1)
+   s.push(2)
+   print(s.peek())  # Output: 2
+   print(s.pop())  # Output: 2
+   ```
+
+9. **Implement a queue using lists.**
+   ```python
+   class Queue:
+       def __init__(self):
+           self.queue = []
+
+       def enqueue(self, item):
+           self.queue.append(item)
+
+       def dequeue(self):
+           if not self.is_empty():
+               return self.queue.pop(0)
+           raise IndexError("Dequeue from an empty queue")
+
+       def is_empty(self):
+           return len(self.queue) == 0
+
+   # Example
+   q = Queue()
+   q.enqueue(1)
+   q.enqueue(2)
+   print(q.dequeue())  # Output: 1
+   ```
+
+10. **Implement a deque (double-ended queue) using collections.deque.**
+    ```python
+    from collections import deque
+
+    d = deque()
+    d.append(1)  # Add to right
+    d.appendleft(2)  # Add to left
+    print(d.pop())  # Output: 1
+    print(d.popleft())  # Output: 2
+    ```
+
+### 4. **Trees**
+
+11. **Implement a basic binary tree with in-order traversal.**
+    ```python
+    class TreeNode:
+        def __init__(self, value):
+            self.value = value
+            self.left = None
+            self.right = None
+
+    def in_order_traversal(root):
+        if root:
+            in_order_traversal(root.left)
+            print(root.value, end=" ")
+            in_order_traversal(root.right)
+
+    # Example
+    root = TreeNode(4)
+    root.left = TreeNode(2)
+    root.right = TreeNode(5)
+    root.left.left = TreeNode(1)
+    root.left.right = TreeNode(3)
+    in_order_traversal(root)  # Output: 1 2 3 4 5
+    ```
+
+12. **Insert a node into a binary search tree (BST).**
+    ```python
+    def insert_into_bst(root, value):
+        if root is None:
+            return TreeNode(value)
+        if value < root.value:
+            root.left = insert_into_bst(root.left, value)
+        else:
+            root.right = insert_into_bst(root.right, value)
+        return root
+
+    # Example
+    root = TreeNode(4)
+    insert_into_bst(root, 2)
+    insert_into_bst(root, 5)
+    insert_into_bst(root, 1)
+    insert_into_bst(root, 3)
+    in_order_traversal(root)  # Output: 1 2 3 4 5
+    ```
+
+13. **Find the height of a binary tree.**
+    ```python
+    def height_of_tree(root):
+        if root is None:
+            return 0
+        left_height = height_of_tree(root.left)
+        right_height = height_of_tree(root.right)
+        return max(left_height, right_height) + 1
+
+    # Example
+    root = TreeNode(4)
+    root.left = TreeNode(2)
+    root.right = TreeNode(5)
+    root.left.left = TreeNode(1)
+    root.left.right = TreeNode(3)
+    print(height_of_tree(root))  # Output: 3
+    ```
+
+### 5. **Graphs**
+
+14. **Implement DFS for a graph.**
+    ```python
+    def dfs(graph, start, visited=None):
+        if visited is None:
+            visited = set()
+        visited.add(start)
+        print(start, end=" ")
+        for neighbor in graph[start]:
+            if neighbor not in visited:
+                dfs(graph, neighbor, visited)
+
+    # Example
+    graph = {
+        1: [2, 3],
+        2: [1, 4],
+        3: [1, 5],
+        4: [2],
+        5: [3]
+    }
+    dfs(graph, 1)  # Output: 1 2 4 3 5
+    ```
+
+15. **Implement BFS for a graph.**
+    ```python
+    from collections import deque
+
+    def bfs(graph, start):
+        visited = set()
+        queue = deque([start])
+        while queue:
+            vertex = queue.popleft()
+            if vertex not in visited:
+                visited.add(vertex)
+                print(vertex, end=" ")
+                queue.extend(neighbor for neighbor in graph[vertex] if neighbor not in
+
+ visited)
+
+    # Example
+    graph = {
+        1: [2, 3],
+        2: [1, 4],
+        3: [1, 5],
+        4: [2],
+        5: [3]
+    }
+    bfs(graph, 1)  # Output: 1 2 3 4 5
+    ```
+
+### 6. **Sorting and Searching**
+
+16. **Implement merge sort.**
+    ```python
+    def merge_sort(arr):
+        if len(arr) > 1:
+            mid = len(arr) // 2
+            left_half = arr[:mid]
+            right_half = arr[mid:]
+
+            merge_sort(left_half)
+            merge_sort(right_half)
+
+            i = j = k = 0
+
+            while i < len(left_half) and j < len(right_half):
+                if left_half[i] < right_half[j]:
+                    arr[k] = left_half[i]
+                    i += 1
+                else:
+                    arr[k] = right_half[j]
+                    j += 1
+                k += 1
+
+            while i < len(left_half):
+                arr[k] = left_half[i]
+                i += 1
+                k += 1
+
+            while j < len(right_half):
+                arr[k] = right_half[j]
+                j += 1
+                k += 1
+
+    # Example
+    arr = [64, 34, 25, 12, 22, 11, 90]
+    merge_sort(arr)
+    print(arr)  # Output: [11, 12, 22, 25, 34, 64, 90]
+    ```
+
+17. **Implement quick sort.**
+    ```python
+    def quick_sort(arr):
+        if len(arr) <= 1:
+            return arr
+        pivot = arr[len(arr) // 2]
+        left = [x for x in arr if x < pivot]
+        middle = [x for x in arr if x == pivot]
+        right = [x for x in arr if x > pivot]
+        return quick_sort(left) + middle + quick_sort(right)
+
+    # Example
+    arr = [3, 6, 8, 10, 1, 2, 1]
+    print(quick_sort(arr))  # Output: [1, 1, 2, 3, 6, 8, 10]
+    ```
+
+18. **Find the k-th smallest element in an unsorted array.**
+    ```python
+    import heapq
+
+    def kth_smallest(arr, k):
+        return heapq.nsmallest(k, arr)[-1]
+
+    # Example
+    arr = [7, 10, 4, 3, 20, 15]
+    k = 3
+    print(kth_smallest(arr, k))  # Output: 7
+    ```
+
+### 7. **Dynamic Programming**
+
+19. **Find the nth Fibonacci number using dynamic programming.**
+    ```python
+    def fibonacci(n):
+        if n <= 1:
+            return n
+        fib = [0] * (n + 1)
+        fib[1] = 1
+        for i in range(2, n + 1):
+            fib[i] = fib[i - 1] + fib[i - 2]
+        return fib[n]
+
+    # Example
+    print(fibonacci(10))  # Output: 55
+    ```
+
+20. **Solve the 0/1 Knapsack problem.**
+    ```python
+    def knapsack(weights, values, capacity):
+        n = len(weights)
+        dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
+
+        for i in range(n + 1):
+            for w in range(capacity + 1):
+                if i == 0 or w == 0:
+                    dp[i][w] = 0
+                elif weights[i - 1] <= w:
+                    dp[i][w] = max(values[i - 1] + dp[i - 1][w - weights[i - 1]], dp[i - 1][w])
+                else:
+                    dp[i][w] = dp[i - 1][w]
+
+        return dp[n][capacity]
+
+    # Example
+    weights = [1, 2, 3]
+    values = [60, 100, 120]
+    capacity = 5
+    print(knapsack(weights, values, capacity))  # Output: 220
+    ```
+
+These examples cover a broad range of DAA topics with specific values for better understanding and practice. Let me know if you need more details or additional topics!
+
+Certainly! Here are additional Python questions and solutions related to various data structures and algorithms, continuing from where we left off:
+
+### 8. **Hash Tables**
+
+21. **Implement a basic hash table with collision handling using chaining.**
+    ```python
+    class HashTable:
+        def __init__(self, size):
+            self.size = size
+            self.table = [[] for _ in range(size)]
+
+        def hash_function(self, key):
+            return hash(key) % self.size
+
+        def insert(self, key, value):
+            index = self.hash_function(key)
+            for pair in self.table[index]:
+                if pair[0] == key:
+                    pair[1] = value
+                    return
+            self.table[index].append([key, value])
+
+        def get(self, key):
+            index = self.hash_function(key)
+            for pair in self.table[index]:
+                if pair[0] == key:
+                    return pair[1]
+            return None
+
+        def delete(self, key):
+            index = self.hash_function(key)
+            for i, pair in enumerate(self.table[index]):
+                if pair[0] == key:
+                    del self.table[index][i]
+                    return
+
+    # Example
+    ht = HashTable(5)
+    ht.insert("name", "Alice")
+    ht.insert("age", 25)
+    print(ht.get("name"))  # Output: Alice
+    ht.delete("age")
+    print(ht.get("age"))  # Output: None
+    ```
+
+22. **Check if two strings are anagrams of each other.**
+    ```python
+    def are_anagrams(str1, str2):
+        return sorted(str1) == sorted(str2)
+
+    # Example
+    str1 = "listen"
+    str2 = "silent"
+    print(are_anagrams(str1, str2))  # Output: True
+    ```
+
+### 9. **Heaps**
+
+23. **Implement a min-heap using the heapq module.**
+    ```python
+    import heapq
+
+    def min_heap_example():
+        heap = []
+        heapq.heappush(heap, 3)
+        heapq.heappush(heap, 1)
+        heapq.heappush(heap, 2)
+        return [heapq.heappop(heap) for _ in range(len(heap))]
+
+    # Example
+    print(min_heap_example())  # Output: [1, 2, 3]
+    ```
+
+24. **Find the k largest elements in an array using a heap.**
+    ```python
+    import heapq
+
+    def k_largest_elements(arr, k):
+        return heapq.nlargest(k, arr)
+
+    # Example
+    arr = [3, 2, 1, 5, 6, 4]
+    k = 2
+    print(k_largest_elements(arr, k))  # Output: [6, 5]
+    ```
+
+### 10. **Graphs Advanced**
+
+25. **Find the shortest path in a graph using Dijkstra's algorithm.**
+    ```python
+    import heapq
+
+    def dijkstra(graph, start):
+        distances = {vertex: float('infinity') for vertex in graph}
+        distances[start] = 0
+        priority_queue = [(0, start)]
+
+        while priority_queue:
+            current_distance, current_vertex = heapq.heappop(priority_queue)
+
+            if current_distance > distances[current_vertex]:
+                continue
+
+            for neighbor, weight in graph[current_vertex]:
+                distance = current_distance + weight
+
+                if distance < distances[neighbor]:
+                    distances[neighbor] = distance
+                    heapq.heappush(priority_queue, (distance, neighbor))
+
+        return distances
+
+    # Example
+    graph = {
+        'A': [('B', 1), ('C', 4)],
+        'B': [('A', 1), ('C', 2), ('D', 5)],
+        'C': [('A', 4), ('B', 2), ('D', 1)],
+        'D': [('B', 5), ('C', 1)]
+    }
+    print(dijkstra(graph, 'A'))  # Output: {'A': 0, 'B': 1, 'C': 3, 'D': 4}
+    ```
+
+26. **Find the shortest path in an unweighted graph using BFS.**
+    ```python
+    from collections import deque
+
+    def bfs_shortest_path(graph, start, end):
+        queue = deque([(start, [start])])
+        visited = set()
+
+        while queue:
+            vertex, path = queue.popleft()
+            if vertex in visited:
+                continue
+            visited.add(vertex)
+            for neighbor in graph[vertex]:
+                if neighbor == end:
+                    return path + [end]
+                queue.append((neighbor, path + [neighbor]))
+
+        return None
+
+    # Example
+    graph = {
+        'A': ['B', 'C'],
+        'B': ['A', 'D', 'E'],
+        'C': ['A', 'F'],
+        'D': ['B'],
+        'E': ['B', 'F'],
+        'F': ['C', 'E']
+    }
+    print(bfs_shortest_path(graph, 'A', 'F'))  # Output: ['A', 'C', 'F']
+    ```
+
+### 11. **Bit Manipulation**
+
+27. **Check if a number is a power of two.**
+    ```python
+    def is_power_of_two(n):
+        return n > 0 and (n & (n - 1)) == 0
+
+    # Example
+    print(is_power_of_two(16))  # Output: True
+    print(is_power_of_two(18))  # Output: False
+    ```
+
+28. **Count the number of set bits (1s) in a binary representation of an integer.**
+    ```python
+    def count_set_bits(n):
+        return bin(n).count('1')
+
+    # Example
+    print(count_set_bits(7))  # Output: 3 (binary 111)
+    ```
+
+29. **Swap two numbers without using a temporary variable.**
+    ```python
+    def swap(a, b):
+        a = a ^ b
+        b = a ^ b
+        a = a ^ b
+        return a, b
+
+    # Example
+    a, b = 5, 10
+    a, b = swap(a, b)
+    print(a, b)  # Output: 10 5
+    ```
+
+### 12. **Advanced Dynamic Programming**
+
+30. **Find the longest common subsequence (LCS) of two strings.**
+    ```python
+    def longest_common_subsequence(x, y):
+        m, n = len(x), len(y)
+        dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if x[i - 1] == y[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+        return dp[m][n]
+
+    # Example
+    x = "ABCBDAB"
+    y = "BDCAB"
+    print(longest_common_subsequence(x, y))  # Output: 4
+    ```
+
+31. **Solve the Longest Increasing Subsequence (LIS) problem.**
+    ```python
+    def longest_increasing_subsequence(arr):
+        if not arr:
+            return 0
+
+        lis = [1] * len(arr)
+        for i in range(1, len(arr)):
+            for j in range(i):
+                if arr[i] > arr[j] and lis[i] < lis[j] + 1:
+                    lis[i] = lis[j] + 1
+
+        return max(lis)
+
+    # Example
+    arr = [10, 22, 9, 33, 21, 50, 41, 60, 80]
+    print(longest_increasing_subsequence(arr))  # Output: 6
+    ```
+
+### 13. **Greedy Algorithms**
+
+32. **Find the minimum number of coins needed to make a given amount.**
+    ```python
+    def min_coins(coins, amount):
+        dp = [float('inf')] * (amount + 1)
+        dp[0] = 0
+
+        for i in range(1, amount + 1):
+            for coin in coins:
+                if i - coin >= 0:
+                    dp[i] = min(dp[i], dp[i - coin] + 1)
+
+        return dp[amount] if dp[amount] != float('inf') else -1
+
+    # Example
+    coins = [1, 2, 5]
+    amount = 11
+    print(min_coins(coins, amount))  # Output: 3 (5 + 5 + 1)
+    ```
+
+33. **Find the maximum sum of non-adjacent elements in an array.**
+    ```python
+    def max_sum_non_adjacent(arr):
+        include = 0
+        exclude = 0
+
+        for num in arr:
+            new_exclude = max(include, exclude)
+            include = exclude + num
+            exclude = new_exclude
+
+        return max(include, exclude)
+
+    # Example
+    arr = [3, 2, 7, 10]
+    print(max_sum_non_adjacent(arr))  # Output: 13 (3 + 10)
+    ```
+
+### 14. **Backtracking**
+
+34
+
+. **Generate all subsets of a set (power set).**
+    ```python
+    def subsets(nums):
+        res = [[]]
+        for num in nums:
+            res += [curr + [num] for curr in res]
+        return res
+
+    # Example
+    nums = [1, 2, 3]
+    print(subsets(nums))  # Output: [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+    ```
+
+35. **Solve the N-Queens problem.**
+    ```python
+    def solve_n_queens(n):
+        def is_valid(board, row, col):
+            for i in range(row):
+                if board[i] == col or \
+                   board[i] - i == col - row or \
+                   board[i] + i == col + row:
+                    return False
+            return True
+
+        def solve(row):
+            if row == n:
+                result.append(board[:])
+                return
+            for col in range(n):
+                if is_valid(board, row, col):
+                    board[row] = col
+                    solve(row + 1)
+
+        result = []
+        board = [-1] * n
+        solve(0)
+        return result
+
+    # Example
+    n = 4
+    print(solve_n_queens(n))  # Output: [[1, 3, 0, 2], [2, 0, 3, 1]]
+    ```
+
+### 15. **String Algorithms**
+
+36. **Implement a function to check if a string is a palindrome.**
+    ```python
+    def is_palindrome(s):
+        return s == s[::-1]
+
+    # Example
+    s = "radar"
+    print(is_palindrome(s))  # Output: True
+    ```
+
+37. **Find all occurrences of a substring in a string using KMP algorithm.**
+    ```python
+    def kmp_search(pattern, text):
+        def build_lps(pattern):
+            lps = [0] * len(pattern)
+            length = 0
+            i = 1
+            while i < len(pattern):
+                if pattern[i] == pattern[length]:
+                    length += 1
+                    lps[i] = length
+                    i += 1
+                else:
+                    if length != 0:
+                        length = lps[length - 1]
+                    else:
+                        lps[i] = 0
+                        i += 1
+            return lps
+
+        lps = build_lps(pattern)
+        i = j = 0
+        occurrences = []
+        while i < len(text):
+            if pattern[j] == text[i]:
+                i += 1
+                j += 1
+            if j == len(pattern):
+                occurrences.append(i - j)
+                j = lps[j - 1]
+            elif i < len(text) and pattern[j] != text[i]:
+                if j != 0:
+                    j = lps[j - 1]
+                else:
+                    i += 1
+        return occurrences
+
+    # Example
+    text = "ABABDABACDABABCABAB"
+    pattern = "ABABCABAB"
+    print(kmp_search(pattern, text))  # Output: [10]
+    ```
+
+### 16. **Trie**
+
+38. **Implement a trie with insert and search functions.**
+    ```python
+    class TrieNode:
+        def __init__(self):
+            self.children = {}
+            self.is_end_of_word = False
+
+    class Trie:
+        def __init__(self):
+            self.root = TrieNode()
+
+        def insert(self, word):
+            node = self.root
+            for char in word:
+                if char not in node.children:
+                    node.children[char] = TrieNode()
+                node = node.children[char]
+            node.is_end_of_word = True
+
+        def search(self, word):
+            node = self.root
+            for char in word:
+                if char not in node.children:
+                    return False
+                node = node.children[char]
+            return node.is_end_of_word
+
+    # Example
+    trie = Trie()
+    trie.insert("hello")
+    trie.insert("world")
+    print(trie.search("hello"))  # Output: True
+    print(trie.search("hell"))   # Output: False
+    ```
+
+39. **Find all words in a given list that can be formed by characters in a given string using a trie.**
+    ```python
+    def find_words(trie, string, words):
+        def dfs(node, prefix):
+            if node.is_end_of_word:
+                result.add(prefix)
+            for char in node.children:
+                if char in string_count and string_count[char] > 0:
+                    string_count[char] -= 1
+                    dfs(node.children[char], prefix + char)
+                    string_count[char] += 1
+
+        string_count = {char: string.count(char) for char in string}
+        result = set()
+        for word in words:
+            if trie.search(word):
+                dfs(trie.root, "")
+        return result
+
+    # Example
+    words = ["hello", "world", "hell", "wo"]
+    string = "helloworld"
+    trie = Trie()
+    for word in words:
+        trie.insert(word)
+    print(find_words(trie, string, words))  # Output: {'hello', 'hell', 'wo'}
+    ```
+
+### 17. **Segment Trees**
+
+40. **Implement a segment tree for range sum queries.**
+    ```python
+    class SegmentTree:
+        def __init__(self, data):
+            self.n = len(data)
+            self.tree = [0] * (2 * self.n)
+            self.build(data)
+
+        def build(self, data):
+            for i in range(self.n):
+                self.tree[self.n + i] = data[i]
+            for i in range(self.n - 1, 0, -1):
+                self.tree[i] = self.tree[i * 2] + self.tree[i * 2 + 1]
+
+        def query(self, left, right):
+            result = 0
+            left += self.n
+            right += self.n
+            while left <= right:
+                if left % 2 == 1:
+                    result += self.tree[left]
+                    left += 1
+                if right % 2 == 0:
+                    result += self.tree[right]
+                    right -= 1
+                left //= 2
+                right //= 2
+            return result
+
+    # Example
+    data = [1, 3, 5, 7, 9, 11]
+    seg_tree = SegmentTree(data)
+    print(seg_tree.query(1, 3))  # Output: 15 (3 + 5 + 7)
+    ```
+
+41. **Update a value in the segment tree.**
+    ```python
+    class SegmentTree:
+        def __init__(self, data):
+            self.n = len(data)
+            self.tree = [0] * (2 * self.n)
+            self.build(data)
+
+        def build(self, data):
+            for i in range(self.n):
+                self.tree[self.n + i] = data[i]
+            for i in range(self.n - 1, 0, -1):
+                self.tree[i] = self.tree[i * 2] + self.tree[i * 2 + 1]
+
+        def update(self, index, value):
+            index += self.n
+            self.tree[index] = value
+            while index > 1:
+                index //= 2
+                self.tree[index] = self.tree[index * 2] + self.tree[index * 2 + 1]
+
+    # Example
+    data = [1, 3, 5, 7, 9, 11]
+    seg_tree = SegmentTree(data)
+    seg_tree.update(1, 10)
+    print(seg_tree.query(1, 3))  # Output: 22 (10 + 5 + 7)
+    ```
+
+### 18. **Union-Find (Disjoint Set)**
+
+42. **Implement the Union-Find data structure with path compression and union by rank.**
+    ```python
+    class UnionFind:
+        def __init__(self, size):
+            self.parent = list(range(size))
+            self.rank = [1] * size
+
+        def find(self, x):
+            if self.parent[x] != x:
+                self.parent[x] = self.find(self.parent[x])
+            return self.parent[x]
+
+        def union(self, x, y):
+            rootX = self.find(x)
+            rootY = self.find(y)
+            if rootX != rootY:
+                if self.rank[rootX] > self.rank[rootY]:
+                    self.parent[rootY] = rootX
+                elif self.rank[rootX] < self.rank[rootY]:
+                    self.parent[rootX] = rootY
+                else:
+                    self.parent[rootY] = rootX
+                    self.rank[rootX] += 1
+
+    # Example
+    uf = UnionFind(5)
+    uf.union(0, 1)
+    uf.union(1, 2)
+    print(uf.find(0))  # Output: 2
+    print(uf.find(1))  # Output: 2
+    ```
+
+43. **Determine if a graph is connected using Union-Find.**
+    ```python
+    def is_connected(n, edges):
+        uf = UnionFind(n)
+        for u, v in edges:
+            uf.union(u, v)
+        root = uf.find(0)
+        return all(uf.find(i) == root for i in range(n))
+
+    # Example
+    n = 4
+    edges =
+
+ [(0, 1), (1, 2), (2, 3)]
+    print(is_connected(n, edges))  # Output: True
+    ```
+
+This list should provide a comprehensive range of foundational and advanced algorithm and data structure problems, each with a Python solution. If you need more examples or additional topics, feel free to ask!
+
+Certainly! Continuing with additional Python questions and solutions related to data structures and algorithms:
+
+### 19. **Graph Algorithms**
+
+44. **Find strongly connected components (SCCs) in a directed graph using Kosaraju's algorithm.**
+    ```python
+    from collections import defaultdict, deque
+
+    def kosaraju_scc(graph):
+        def dfs(v, visited, stack):
+            visited.add(v)
+            for neighbor in graph[v]:
+                if neighbor not in visited:
+                    dfs(neighbor, visited, stack)
+            stack.append(v)
+
+        def reverse_graph(graph):
+            reversed_graph = defaultdict(list)
+            for v in graph:
+                for neighbor in graph[v]:
+                    reversed_graph[neighbor].append(v)
+            return reversed_graph
+
+        def dfs_reversed(v, visited, component):
+            visited.add(v)
+            component.append(v)
+            for neighbor in reversed_graph[v]:
+                if neighbor not in visited:
+                    dfs_reversed(neighbor, visited, component)
+
+        stack = []
+        visited = set()
+        for v in graph:
+            if v not in visited:
+                dfs(v, visited, stack)
+
+        reversed_graph = reverse_graph(graph)
+        visited = set()
+        sccs = []
+        while stack:
+            v = stack.pop()
+            if v not in visited:
+                component = []
+                dfs_reversed(v, visited, component)
+                sccs.append(component)
+
+        return sccs
+
+    # Example
+    graph = {
+        1: [2],
+        2: [3],
+        3: [1, 4],
+        4: [5],
+        5: [4]
+    }
+    print(kosaraju_scc(graph))  # Output: [[5, 4], [3, 2, 1]]
+    ```
+
+45. **Find the Minimum Spanning Tree (MST) using Prim’s algorithm.**
+    ```python
+    import heapq
+
+    def prim_mst(graph):
+        mst = []
+        visited = set()
+        min_heap = [(0, 0)]  # (weight, vertex)
+        total_weight = 0
+
+        while min_heap:
+            weight, u = heapq.heappop(min_heap)
+            if u not in visited:
+                visited.add(u)
+                total_weight += weight
+                mst.append((weight, u))
+
+                for v, edge_weight in graph[u]:
+                    if v not in visited:
+                        heapq.heappush(min_heap, (edge_weight, v))
+
+        return mst, total_weight
+
+    # Example
+    graph = {
+        0: [(1, 4), (2, 1)],
+        1: [(0, 4), (2, 2), (3, 5)],
+        2: [(0, 1), (1, 2), (3, 8)],
+        3: [(1, 5), (2, 8)]
+    }
+    mst, total_weight = prim_mst(graph)
+    print(mst)  # Output: [(0, 0), (1, 2), (2, 1), (5, 3)]
+    print(total_weight)  # Output: 8
+    ```
+
+46. **Find the shortest path in a weighted graph with negative weights using Bellman-Ford algorithm.**
+    ```python
+    def bellman_ford(graph, start):
+        dist = {vertex: float('inf') for vertex in graph}
+        dist[start] = 0
+
+        for _ in range(len(graph) - 1):
+            for u in graph:
+                for v, weight in graph[u]:
+                    if dist[u] != float('inf') and dist[u] + weight < dist[v]:
+                        dist[v] = dist[u] + weight
+
+        # Check for negative weight cycles
+        for u in graph:
+            for v, weight in graph[u]:
+                if dist[u] != float('inf') and dist[u] + weight < dist[v]:
+                    raise ValueError("Graph contains a negative weight cycle")
+
+        return dist
+
+    # Example
+    graph = {
+        'A': [('B', 1), ('C', 4)],
+        'B': [('C', 2), ('D', 5)],
+        'C': [('D', 1)],
+        'D': []
+    }
+    print(bellman_ford(graph, 'A'))  # Output: {'A': 0, 'B': 1, 'C': 3, 'D': 4}
+    ```
+
+### 20. **Mathematical Algorithms**
+
+47. **Compute the Greatest Common Divisor (GCD) of two numbers using Euclid's algorithm.**
+    ```python
+    def gcd(a, b):
+        while b:
+            a, b = b, a % b
+        return a
+
+    # Example
+    print(gcd(48, 18))  # Output: 6
+    ```
+
+48. **Compute the Least Common Multiple (LCM) of two numbers.**
+    ```python
+    def lcm(a, b):
+        return abs(a * b) // gcd(a, b)
+
+    # Example
+    print(lcm(12, 15))  # Output: 60
+    ```
+
+49. **Calculate the factorial of a number using recursion.**
+    ```python
+    def factorial(n):
+        if n == 0:
+            return 1
+        else:
+            return n * factorial(n - 1)
+
+    # Example
+    print(factorial(5))  # Output: 120
+    ```
+
+50. **Find all prime numbers up to a given number using the Sieve of Eratosthenes.**
+    ```python
+    def sieve_of_eratosthenes(n):
+        is_prime = [True] * (n + 1)
+        p = 2
+        while p * p <= n:
+            if is_prime[p]:
+                for i in range(p * p, n + 1, p):
+                    is_prime[i] = False
+            p += 1
+        return [p for p in range(2, n + 1) if is_prime[p]]
+
+    # Example
+    print(sieve_of_eratosthenes(30))  # Output: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+    ```
+
+### 21. **String Manipulation**
+
+51. **Find the length of the longest substring without repeating characters.**
+    ```python
+    def longest_unique_substring(s):
+        char_index = {}
+        start = max_len = 0
+
+        for i, char in enumerate(s):
+            if char in char_index and char_index[char] >= start:
+                start = char_index[char] + 1
+            char_index[char] = i
+            max_len = max(max_len, i - start + 1)
+
+        return max_len
+
+    # Example
+    print(longest_unique_substring("abcabcbb"))  # Output: 3
+    ```
+
+52. **Find all permutations of a string.**
+    ```python
+    from itertools import permutations
+
+    def string_permutations(s):
+        return [''.join(p) for p in permutations(s)]
+
+    # Example
+    print(string_permutations("abc"))  # Output: ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
+    ```
+
+53. **Check if a string contains all unique characters.**
+    ```python
+    def has_unique_chars(s):
+        return len(set(s)) == len(s)
+
+    # Example
+    print(has_unique_chars("abcdef"))  # Output: True
+    print(has_unique_chars("aabbcc"))  # Output: False
+    ```
+
+54. **Implement the Rabin-Karp algorithm for substring search.**
+    ```python
+    def rabin_karp(text, pattern):
+        base = 256
+        prime = 101
+        m, n = len(pattern), len(text)
+        pattern_hash = 0
+        text_hash = 0
+        h = 1
+        result = []
+
+        for i in range(m - 1):
+            h = (h * base) % prime
+
+        for i in range(m):
+            pattern_hash = (base * pattern_hash + ord(pattern[i])) % prime
+            text_hash = (base * text_hash + ord(text[i])) % prime
+
+        for i in range(n - m + 1):
+            if pattern_hash == text_hash:
+                if text[i:i + m] == pattern:
+                    result.append(i)
+
+            if i < n - m:
+                text_hash = (base * (text_hash - ord(text[i]) * h) + ord(text[i + m])) % prime
+                if text_hash < 0:
+                    text_hash += prime
+
+        return result
+
+    # Example
+    text = "ABABABCABABAB"
+    pattern = "ABAB"
+    print(rabin_karp(text, pattern))  # Output: [0, 3, 7]
+    ```
+
+55. **Reverse the words in a given string.**
+    ```python
+    def reverse_words(s):
+        return ' '.join(s.split()[::-1])
+
+    # Example
+    print(reverse_words("the sky is blue"))  # Output: "blue is sky the"
+    ```
+
+### 22. **Computational Geometry**
+
+56. **Check if a point is inside a given polygon using the ray-casting algorithm.**
+    ```python
+    def is_point_in_polygon(x, y, polygon):
+        n = len(polygon)
+        inside = False
+        p1x, p1y = polygon[0]
+
+       
+
+ for i in range(n + 1):
+            p2x, p2y = polygon[i % n]
+            if y > min(p1y, p2y):
+                if y <= max(p1y, p2y):
+                    if x <= max(p1x, p2x):
+                        if p1y != p2y:
+                            xints = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
+                        if p1x == p2x or x <= xints:
+                            inside = not inside
+            p1x, p1y = p2x, p2y
+
+        return inside
+
+    # Example
+    polygon = [(0, 0), (5, 0), (5, 5), (0, 5)]
+    print(is_point_in_polygon(3, 3, polygon))  # Output: True
+    print(is_point_in_polygon(6, 6, polygon))  # Output: False
+    ```
+
+57. **Compute the convex hull of a set of points using Graham's scan.**
+    ```python
+    def convex_hull(points):
+        def cross(o, a, b):
+            return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+        points = sorted(points)
+        lower = []
+        for p in points:
+            while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
+                lower.pop()
+            lower.append(p)
+
+        upper = []
+        for p in reversed(points):
+            while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
+                upper.pop()
+            upper.append(p)
+
+        return lower[:-1] + upper[:-1]
+
+    # Example
+    points = [(0, 0), (2, 0), (1, 1), (2, 2), (0, 2)]
+    print(convex_hull(points))  # Output: [(0, 0), (2, 0), (2, 2), (0, 2)]
+    ```
+
+### 23. **Dynamic Programming**
+
+58. **Find the longest common subsequence (LCS) of two strings.**
+    ```python
+    def longest_common_subsequence(s1, s2):
+        dp = [[0] * (len(s2) + 1) for _ in range(len(s1) + 1)]
+
+        for i in range(1, len(s1) + 1):
+            for j in range(1, len(s2) + 1):
+                if s1[i - 1] == s2[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+        return dp[-1][-1]
+
+    # Example
+    s1 = "ABCBDAB"
+    s2 = "BDCAB"
+    print(longest_common_subsequence(s1, s2))  # Output: 4
+    ```
+
+59. **Solve the 0/1 Knapsack problem.**
+    ```python
+    def knapsack(weights, values, capacity):
+        n = len(weights)
+        dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+
+        for i in range(1, n + 1):
+            for w in range(capacity + 1):
+                if weights[i - 1] <= w:
+                    dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - weights[i - 1]] + values[i - 1])
+                else:
+                    dp[i][w] = dp[i - 1][w]
+
+        return dp[n][capacity]
+
+    # Example
+    weights = [1, 2, 3]
+    values = [60, 100, 120]
+    capacity = 5
+    print(knapsack(weights, values, capacity))  # Output: 220
+    ```
+
+60. **Find the minimum number of coins needed to make a given amount.**
+    ```python
+    def min_coins(coins, amount):
+        dp = [float('inf')] * (amount + 1)
+        dp[0] = 0
+
+        for i in range(1, amount + 1):
+            for coin in coins:
+                if i >= coin:
+                    dp[i] = min(dp[i], dp[i - coin] + 1)
+
+        return dp[amount] if dp[amount] != float('inf') else -1
+
+    # Example
+    coins = [1, 2, 5]
+    amount = 11
+    print(min_coins(coins, amount))  # Output: 3
+    ```
+
+61. **Compute the matrix chain multiplication problem.**
+    ```python
+    def matrix_chain_order(dimensions):
+        n = len(dimensions) - 1
+        dp = [[0] * n for _ in range(n)]
+
+        for length in range(2, n + 1):
+            for i in range(n - length + 1):
+                j = i + length - 1
+                dp[i][j] = float('inf')
+                for k in range(i, j):
+                    cost = dp[i][k] + dp[k + 1][j] + dimensions[i] * dimensions[k + 1] * dimensions[j + 1]
+                    if cost < dp[i][j]:
+                        dp[i][j] = cost
+
+        return dp[0][n - 1]
+
+    # Example
+    dimensions = [10, 20, 30, 40, 30]
+    print(matrix_chain_order(dimensions))  # Output: 30000
+    ```
+
+### 24. **Miscellaneous**
+
+62. **Check if a number is a power of two.**
+    ```python
+    def is_power_of_two(n):
+        return n > 0 and (n & (n - 1)) == 0
+
+    # Example
+    print(is_power_of_two(16))  # Output: True
+    print(is_power_of_two(18))  # Output: False
+    ```
+
+63. **Find the maximum subarray sum (Kadane's Algorithm).**
+    ```python
+    def max_subarray_sum(nums):
+        max_current = max_global = nums[0]
+
+        for num in nums[1:]:
+            max_current = max(num, max_current + num)
+            max_global = max(max_global, max_current)
+
+        return max_global
+
+    # Example
+    print(max_subarray_sum([-2, 1, -3, 4, -1, 2, 1, -5, 4]))  # Output: 6
+    ```
+
+64. **Generate Pascal's triangle.**
+    ```python
+    def generate_pascals_triangle(num_rows):
+        triangle = []
+
+        for i in range(num_rows):
+            row = [1] * (i + 1)
+            for j in range(1, i):
+                row[j] = triangle[i - 1][j - 1] + triangle[i - 1][j]
+            triangle.append(row)
+
+        return triangle
+
+    # Example
+    print(generate_pascals_triangle(5))
+    # Output: [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]]
+    ```
+
+65. **Count inversions in an array.**
+    ```python
+    def count_inversions(arr):
+        def merge_and_count(arr, temp_arr, left, mid, right):
+            i = left
+            j = mid + 1
+            k = left
+            inv_count = 0
+
+            while i <= mid and j <= right:
+                if arr[i] <= arr[j]:
+                    temp_arr[k] = arr[i]
+                    i += 1
+                else:
+                    temp_arr[k] = arr[j]
+                    inv_count += (mid - i + 1)
+                    j += 1
+                k += 1
+
+            while i <= mid:
+                temp_arr[k] = arr[i]
+                i += 1
+                k += 1
+
+            while j <= right:
+                temp_arr[k] = arr[j]
+                j += 1
+                k += 1
+
+            for i in range(left, right + 1):
+                arr[i] = temp_arr[i]
+
+            return inv_count
+
+        def merge_sort_and_count(arr, temp_arr, left, right):
+            inv_count = 0
+            if left < right:
+                mid = (left + right) // 2
+                inv_count += merge_sort_and_count(arr, temp_arr, left, mid)
+                inv_count += merge_sort_and_count(arr, temp_arr, mid + 1, right)
+                inv_count += merge_and_count(arr, temp_arr, left, mid, right)
+            return inv_count
+
+        temp_arr = [0] * len(arr)
+        return merge_sort_and_count(arr, temp_arr, 0, len(arr) - 1)
+
+    # Example
+    arr = [1, 20, 6, 4, 5]
+    print(count_inversions(arr))  # Output: 5
+    ```
+
+These questions and solutions cover a broad spectrum
+
+ of fundamental and advanced topics in data structures and algorithms, providing both practical and theoretical insights. If you need more details or have any other questions, feel free to ask!
+ 
+ 
+ Certainly! Continuing with more questions and solutions on algorithms and data structures:
+
+### 25. **Advanced Graph Algorithms**
+
+66. **Find the shortest path in a graph using Dijkstra’s algorithm (for graphs with non-negative weights).**
+    ```python
+    import heapq
+
+    def dijkstra(graph, start):
+        dist = {vertex: float('inf') for vertex in graph}
+        dist[start] = 0
+        min_heap = [(0, start)]
+
+        while min_heap:
+            current_dist, u = heapq.heappop(min_heap)
+
+            if current_dist > dist[u]:
+                continue
+
+            for v, weight in graph[u]:
+                distance = current_dist + weight
+                if distance < dist[v]:
+                    dist[v] = distance
+                    heapq.heappush(min_heap, (distance, v))
+
+        return dist
+
+    # Example
+    graph = {
+        'A': [('B', 1), ('C', 4)],
+        'B': [('C', 2), ('D', 5)],
+        'C': [('D', 1)],
+        'D': []
+    }
+    print(dijkstra(graph, 'A'))  # Output: {'A': 0, 'B': 1, 'C': 3, 'D': 4}
+    ```
+
+67. **Find the maximum flow in a flow network using the Ford-Fulkerson algorithm.**
+    ```python
+    from collections import defaultdict
+
+    def bfs(r_graph, s, t, parent):
+        visited = set()
+        queue = [s]
+        visited.add(s)
+
+        while queue:
+            u = queue.pop(0)
+
+            for v, capacity in r_graph[u]:
+                if v not in visited and capacity > 0:
+                    visited.add(v)
+                    parent[v] = u
+                    if v == t:
+                        return True
+                    queue.append(v)
+
+        return False
+
+    def ford_fulkerson(graph, source, sink):
+        r_graph = defaultdict(list)
+        for u in graph:
+            for v, capacity in graph[u]:
+                r_graph[u].append((v, capacity))
+                r_graph[v].append((u, 0))  # Residual capacity for reverse edge
+
+        parent = {}
+        max_flow = 0
+
+        while bfs(r_graph, source, sink, parent):
+            path_flow = float('inf')
+            s = sink
+
+            while s != source:
+                for v, capacity in r_graph[parent[s]]:
+                    if v == s:
+                        path_flow = min(path_flow, capacity)
+                s = parent[s]
+
+            v = sink
+            while v != source:
+                u = parent[v]
+                for index, (node, capacity) in enumerate(r_graph[u]):
+                    if node == v:
+                        r_graph[u][index] = (node, capacity - path_flow)
+                for index, (node, capacity) in enumerate(r_graph[v]):
+                    if node == u:
+                        r_graph[v][index] = (node, capacity + path_flow)
+                v = parent[v]
+
+            max_flow += path_flow
+
+        return max_flow
+
+    # Example
+    graph = {
+        's': [('a', 10), ('b', 5)],
+        'a': [('b', 15), ('t', 10)],
+        'b': [('a', 10), ('t', 10)],
+        't': []
+    }
+    print(ford_fulkerson(graph, 's', 't'))  # Output: 15
+    ```
+
+68. **Find the shortest path in a weighted graph using the A* algorithm.**
+    ```python
+    import heapq
+
+    def a_star(graph, start, goal, heuristic):
+        open_set = []
+        heapq.heappush(open_set, (0 + heuristic[start], start))
+        came_from = {}
+        g_score = {vertex: float('inf') for vertex in graph}
+        g_score[start] = 0
+        f_score = {vertex: float('inf') for vertex in graph}
+        f_score[start] = heuristic[start]
+
+        while open_set:
+            _, current = heapq.heappop(open_set)
+
+            if current == goal:
+                path = []
+                while current in came_from:
+                    path.append(current)
+                    current = came_from[current]
+                path.append(start)
+                return path[::-1]
+
+            for neighbor, weight in graph[current]:
+                tentative_g_score = g_score[current] + weight
+                if tentative_g_score < g_score[neighbor]:
+                    came_from[neighbor] = current
+                    g_score[neighbor] = tentative_g_score
+                    f_score[neighbor] = g_score[neighbor] + heuristic[neighbor]
+                    heapq.heappush(open_set, (f_score[neighbor], neighbor))
+
+        return None
+
+    # Example
+    graph = {
+        'A': [('B', 1), ('C', 4)],
+        'B': [('C', 2), ('D', 5)],
+        'C': [('D', 1)],
+        'D': []
+    }
+    heuristic = {'A': 7, 'B': 6, 'C': 2, 'D': 0}
+    print(a_star(graph, 'A', 'D', heuristic))  # Output: ['A', 'B', 'C', 'D']
+    ```
+
+### 26. **Advanced Dynamic Programming**
+
+69. **Solve the Longest Increasing Subsequence (LIS) problem.**
+    ```python
+    def longest_increasing_subsequence(nums):
+        if not nums:
+            return 0
+
+        dp = [1] * len(nums)
+        for i in range(1, len(nums)):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+
+        return max(dp)
+
+    # Example
+    print(longest_increasing_subsequence([10, 9, 2, 5, 3, 7, 101, 18]))  # Output: 4
+    ```
+
+70. **Solve the Edit Distance (Levenshtein distance) problem.**
+    ```python
+    def edit_distance(s1, s2):
+        m, n = len(s1), len(s2)
+        dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+        for i in range(m + 1):
+            dp[i][0] = i
+        for j in range(n + 1):
+            dp[0][j] = j
+
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if s1[i - 1] == s2[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1]
+                else:
+                    dp[i][j] = min(dp[i - 1][j] + 1,  # Deletion
+                                   dp[i][j - 1] + 1,  # Insertion
+                                   dp[i - 1][j - 1] + 1)  # Substitution
+
+        return dp[m][n]
+
+    # Example
+    print(edit_distance("kitten", "sitting"))  # Output: 3
+    ```
+
+71. **Solve the Longest Palindromic Subsequence problem.**
+    ```python
+    def longest_palindromic_subsequence(s):
+        n = len(s)
+        dp = [[0] * n for _ in range(n)]
+
+        for i in range(n):
+            dp[i][i] = 1
+
+        for cl in range(2, n + 1):
+            for i in range(n - cl + 1):
+                j = i + cl - 1
+                if s[i] == s[j] and cl == 2:
+                    dp[i][j] = 2
+                elif s[i] == s[j]:
+                    dp[i][j] = dp[i + 1][j - 1] + 2
+                else:
+                    dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])
+
+        return dp[0][n - 1]
+
+    # Example
+    print(longest_palindromic_subsequence("bbabcbab"))  # Output: 7
+    ```
+
+72. **Solve the Maximum Subarray Problem with Divide and Conquer.**
+    ```python
+    def max_subarray_divide_and_conquer(arr, low, high):
+        if low == high:
+            return arr[low]
+
+        mid = (low + high) // 2
+        left_max = max_subarray_divide_and_conquer(arr, low, mid)
+        right_max = max_subarray_divide_and_conquer(arr, mid + 1, high)
+
+        left_sum = right_sum = 0
+        temp_sum = 0
+
+        for i in range(mid, low - 1, -1):
+            temp_sum += arr[i]
+            left_sum = max(left_sum, temp_sum)
+
+        temp_sum = 0
+        for i in range(mid + 1, high + 1):
+            temp_sum += arr[i]
+            right_sum = max(right_sum, temp_sum)
+
+        cross_sum = left_sum + right_sum
+
+        return max(left_max, right_max, cross_sum)
+
+    # Example
+    arr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+    print(max_subarray_divide_and_conquer(arr, 0, len(arr) - 1))  # Output: 6
+    ```
+
+### 27. **Mathematical and Combin
+
+atorial Algorithms**
+
+73. **Calculate the greatest common divisor (GCD) of two numbers.**
+    ```python
+    import math
+
+    def gcd(a, b):
+        return math.gcd(a, b)
+
+    # Example
+    print(gcd(48, 18))  # Output: 6
+    ```
+
+74. **Calculate the least common multiple (LCM) of two numbers.**
+    ```python
+    def lcm(a, b):
+        return abs(a * b) // gcd(a, b)
+
+    # Example
+    print(lcm(12, 15))  # Output: 60
+    ```
+
+75. **Generate all combinations of a set of items.**
+    ```python
+    from itertools import combinations
+
+    def generate_combinations(items):
+        all_combinations = []
+        for r in range(len(items) + 1):
+            all_combinations.extend(combinations(items, r))
+        return all_combinations
+
+    # Example
+    items = [1, 2, 3]
+    print(list(generate_combinations(items)))  
+    # Output: [(), (1,), (2,), (3,), (1, 2), (1, 3), (2, 3), (1, 2, 3)]
+    ```
+
+76. **Generate all permutations of a set of items.**
+    ```python
+    from itertools import permutations
+
+    def generate_permutations(items):
+        return list(permutations(items))
+
+    # Example
+    items = [1, 2, 3]
+    print(generate_permutations(items))  
+    # Output: [(1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), (3, 2, 1)]
+    ```
+
+77. **Calculate the binomial coefficient (n choose k).**
+    ```python
+    from math import comb
+
+    def binomial_coefficient(n, k):
+        return comb(n, k)
+
+    # Example
+    print(binomial_coefficient(5, 2))  # Output: 10
+    ```
+
+78. **Check if a number is prime.**
+    ```python
+    def is_prime(n):
+        if n <= 1:
+            return False
+        if n <= 3:
+            return True
+        if n % 2 == 0 or n % 3 == 0:
+            return False
+        i = 5
+        while i * i <= n:
+            if n % i == 0 or n % (i + 2) == 0:
+                return False
+            i += 6
+        return True
+
+    # Example
+    print(is_prime(29))  # Output: True
+    print(is_prime(30))  # Output: False
+    ```
+
+### 28. **Number Theory**
+
+79. **Find the prime factors of a number.**
+    ```python
+    def prime_factors(n):
+        factors = []
+        while n % 2 == 0:
+            factors.append(2)
+            n //= 2
+        for i in range(3, int(n**0.5) + 1, 2):
+            while n % i == 0:
+                factors.append(i)
+                n //= i
+        if n > 2:
+            factors.append(n)
+        return factors
+
+    # Example
+    print(prime_factors(315))  # Output: [3, 3, 5, 7]
+    ```
+
+80. **Compute the power of a number using exponentiation by squaring.**
+    ```python
+    def power(x, y):
+        result = 1
+        while y > 0:
+            if y % 2 == 1:
+                result *= x
+            x *= x
+            y //= 2
+        return result
+
+    # Example
+    print(power(2, 10))  # Output: 1024
+    ```
+
+81. **Calculate modular exponentiation.**
+    ```python
+    def modular_exponentiation(base, exp, mod):
+        result = 1
+        base = base % mod
+        while exp > 0:
+            if (exp % 2) == 1:
+                result = (result * base) % mod
+            exp = exp >> 1
+            base = (base * base) % mod
+        return result
+
+    # Example
+    print(modular_exponentiation(2, 10, 1000))  # Output: 24
+    ```
+
+82. **Find all divisors of a number.**
+    ```python
+    def find_divisors(n):
+        divisors = set()
+        for i in range(1, int(n**0.5) + 1):
+            if n % i == 0:
+                divisors.add(i)
+                divisors.add(n // i)
+        return sorted(divisors)
+
+    # Example
+    print(find_divisors(36))  # Output: [1, 2, 3, 4, 6, 9, 12, 18, 36]
+    ```
+
+83. **Compute the factorial of a number.**
+    ```python
+    def factorial(n):
+        if n == 0:
+            return 1
+        result = 1
+        for i in range(1, n + 1):
+            result *= i
+        return result
+
+    # Example
+    print(factorial(5))  # Output: 120
+    ```
+
+### 29. **String Algorithms**
+
+84. **Find the longest common prefix of an array of strings.**
+    ```python
+    def longest_common_prefix(strs):
+        if not strs:
+            return ""
+        prefix = strs[0]
+        for s in strs[1:]:
+            while not s.startswith(prefix):
+                prefix = prefix[:-1]
+                if not prefix:
+                    return ""
+        return prefix
+
+    # Example
+    print(longest_common_prefix(["flower", "flow", "flight"]))  # Output: "fl"
+    ```
+
+85. **Check if two strings are anagrams.**
+    ```python
+    def are_anagrams(s1, s2):
+        return sorted(s1) == sorted(s2)
+
+    # Example
+    print(are_anagrams("listen", "silent"))  # Output: True
+    print(are_anagrams("hello", "world"))    # Output: False
+    ```
+
+86. **Find the first non-repeating character in a string.**
+    ```python
+    from collections import Counter
+
+    def first_non_repeating_char(s):
+        count = Counter(s)
+        for char in s:
+            if count[char] == 1:
+                return char
+        return None
+
+    # Example
+    print(first_non_repeating_char("swiss"))  # Output: "w"
+    ```
+
+87. **Implement KMP algorithm for substring search.**
+    ```python
+    def kmp_search(pattern, text):
+        def build_lps(pattern):
+            lps = [0] * len(pattern)
+            length = 0
+            i = 1
+            while i < len(pattern):
+                if pattern[i] == pattern[length]:
+                    length += 1
+                    lps[i] = length
+                    i += 1
+                else:
+                    if length != 0:
+                        length = lps[length - 1]
+                    else:
+                        lps[i] = 0
+                        i += 1
+            return lps
+
+        lps = build_lps(pattern)
+        i = j = 0
+        while i < len(text):
+            if pattern[j] == text[i]:
+                i += 1
+                j += 1
+
+            if j == len(pattern):
+                return i - j
+            elif i < len(text) and pattern[j] != text[i]:
+                if j != 0:
+                    j = lps[j - 1]
+                else:
+                    i += 1
+
+        return -1
+
+    # Example
+    text = "ababcababcabc"
+    pattern = "ababc"
+    print(kmp_search(pattern, text))  # Output: 0
+    ```
+
+88. **Check if a string is a palindrome.**
+    ```python
+    def is_palindrome(s):
+        return s == s[::-1]
+
+    # Example
+    print(is_palindrome("radar"))  # Output: True
+    print(is_palindrome("hello"))  # Output: False
+    ```
+
+89. **Reverse a string.**
+    ```python
+    def reverse_string(s):
+        return s[::-1]
+
+    # Example
+    print(reverse_string("hello"))  # Output: "olleh"
+    ```
+
+90. **Find the longest substring without repeating characters.**
+    ```python
+    def longest_substring_without_repeating(s):
+        char_set = set()
+        left = 0
+        max_length = 0
+
+        for right in range(len(s)):
+            while s[right] in char_set:
+                char_set.remove(s[left])
+                left += 1
+            char_set.add(s[right])
+            max_length = max(max_length, right - left + 1)
+
+        return max_length
+
+    # Example
+    print(longest_substring_without_repeating("abcabcbb"))  # Output: 3
+    ```
+
+### 30. **Miscellaneous Algorithms**
+
+91. **Find the median of two sorted arrays.**
+    ```python
+    def find_median_sorted_arrays(nums1, nums2):
+        def find_kth_element(k):
+            index1, index2 = 0, 0
+            while
+
+ True:
+                if index1 == len(nums1):
+                    return nums2[index2 + k - 1]
+                if index2 == len(nums2):
+                    return nums1[index1 + k - 1]
+                if k == 1:
+                    return min(nums1[index1], nums2[index2])
+                
+                new_index1 = min(index1 + k // 2 - 1, len(nums1) - 1)
+                new_index2 = min(index2 + k // 2 - 1, len(nums2) - 1)
+                pivot1, pivot2 = nums1[new_index1], nums2[new_index2]
+                
+                if pivot1 <= pivot2:
+                    k -= new_index1 - index1 + 1
+                    index1 = new_index1 + 1
+                else:
+                    k -= new_index2 - index2 + 1
+                    index2 = new_index2 + 1
+
+        len_total = len(nums1) + len(nums2)
+        if len_total % 2 == 1:
+            return find_kth_element(len_total // 2 + 1)
+        else:
+            return (find_kth_element(len_total // 2) + find_kth_element(len_total // 2 + 1)) / 2
+
+    # Example
+    nums1 = [1, 3]
+    nums2 = [2]
+    print(find_median_sorted_arrays(nums1, nums2))  # Output: 2.0
+    ```
+
+92. **Calculate the nth Fibonacci number using memoization.**
+    ```python
+    def fibonacci(n, memo={}):
+        if n in memo:
+            return memo[n]
+        if n <= 1:
+            return n
+        memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
+        return memo[n]
+
+    # Example
+    print(fibonacci(10))  # Output: 55
+    ```
+
+93. **Find the intersection of two arrays.**
+    ```python
+    def intersection(nums1, nums2):
+        return list(set(nums1) & set(nums2))
+
+    # Example
+    print(intersection([1, 2, 2, 1], [2, 2]))  # Output: [2]
+    ```
+
+94. **Find the union of two arrays.**
+    ```python
+    def union(nums1, nums2):
+        return list(set(nums1) | set(nums2))
+
+    # Example
+    print(union([1, 2, 2, 1], [2, 3]))  # Output: [1, 2, 3]
+    ```
+
+95. **Find the unique elements in an array.**
+    ```python
+    def unique_elements(nums):
+        return list(set(nums))
+
+    # Example
+    print(unique_elements([1, 2, 2, 3, 4, 4]))  # Output: [1, 2, 3, 4]
+    ```
+
+96. **Find the kth largest element in an array.**
+    ```python
+    import heapq
+
+    def kth_largest(nums, k):
+        return heapq.nlargest(k, nums)[-1]
+
+    # Example
+    print(kth_largest([3, 2, 1, 5, 6, 4], 2))  # Output: 5
+    ```
+
+97. **Find the majority element (element appearing more than n/2 times).**
+    ```python
+    def majority_element(nums):
+        count = 0
+        candidate = None
+        for num in nums:
+            if count == 0:
+                candidate = num
+            count += (1 if num == candidate else -1)
+        return candidate
+
+    # Example
+    print(majority_element([3, 2, 3]))  # Output: 3
+    ```
+
+98. **Check if a number is a power of two.**
+    ```python
+    def is_power_of_two(n):
+        return n > 0 and (n & (n - 1)) == 0
+
+    # Example
+    print(is_power_of_two(16))  # Output: True
+    print(is_power_of_two(18))  # Output: False
+    ```
+
+99. **Count the number of set bits in an integer.**
+    ```python
+    def count_set_bits(n):
+        return bin(n).count('1')
+
+    # Example
+    print(count_set_bits(7))  # Output: 3
+    ```
+
+100. **Find the nth triangular number.**
+    ```python
+    def triangular_number(n):
+        return n * (n + 1) // 2
+
+    # Example
+    print(triangular_number(5))  # Output: 15
+    ```
+
+This should give you a robust set of problems and solutions across fundamental and advanced topics in data structures and algorithms. If you need further elaboration or more problems, feel free to ask!
+
+Certainly! Here are some basic programs and patterns in Python to get you started:
+
+### Basic Programs
+
+1. **Hello, World!**
+    ```python
+    print("Hello, World!")
+    ```
+
+2. **Basic Calculator (Addition, Subtraction, Multiplication, Division)**
+    ```python
+    def calculator():
+        print("Select operation:")
+        print("1. Add")
+        print("2. Subtract")
+        print("3. Multiply")
+        print("4. Divide")
+
+        choice = input("Enter choice (1/2/3/4): ")
+
+        num1 = float(input("Enter first number: "))
+        num2 = float(input("Enter second number: "))
+
+        if choice == '1':
+            print(f"{num1} + {num2} = {num1 + num2}")
+        elif choice == '2':
+            print(f"{num1} - {num2} = {num1 - num2}")
+        elif choice == '3':
+            print(f"{num1} * {num2} = {num1 * num2}")
+        elif choice == '4':
+            if num2 != 0:
+                print(f"{num1} / {num2} = {num1 / num2}")
+            else:
+                print("Error! Division by zero.")
+        else:
+            print("Invalid input")
+
+    calculator()
+    ```
+
+3. **Factorial of a Number**
+    ```python
+    def factorial(n):
+        if n == 0:
+            return 1
+        else:
+            return n * factorial(n - 1)
+
+    num = int(input("Enter a number: "))
+    print(f"Factorial of {num} is {factorial(num)}")
+    ```
+
+4. **Check if a Number is Prime**
+    ```python
+    def is_prime(n):
+        if n <= 1:
+            return False
+        for i in range(2, int(n ** 0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    num = int(input("Enter a number: "))
+    if is_prime(num):
+        print(f"{num} is a prime number.")
+    else:
+        print(f"{num} is not a prime number.")
+    ```
+
+5. **Fibonacci Sequence**
+    ```python
+    def fibonacci(n):
+        a, b = 0, 1
+        for _ in range(n):
+            print(a, end=' ')
+            a, b = b, a + b
+
+    num = int(input("Enter the number of terms: "))
+    fibonacci(num)
+    ```
+
+6. **Reverse a String**
+    ```python
+    def reverse_string(s):
+        return s[::-1]
+
+    string = input("Enter a string: ")
+    print(f"Reversed string: {reverse_string(string)}")
+    ```
+
+7. **Find the Largest of Three Numbers**
+    ```python
+    def find_largest(num1, num2, num3):
+        return max(num1, num2, num3)
+
+    a = float(input("Enter first number: "))
+    b = float(input("Enter second number: "))
+    c = float(input("Enter third number: "))
+    print(f"The largest number is {find_largest(a, b, c)}")
+    ```
+
+### Basic Patterns
+
+1. **Right-Angled Triangle Pattern**
+    ```python
+    def right_angled_triangle(n):
+        for i in range(1, n + 1):
+            print('*' * i)
+
+    rows = int(input("Enter number of rows: "))
+    right_angled_triangle(rows)
+    ```
+
+2. **Square Pattern**
+    ```python
+    def square_pattern(n):
+        for i in range(n):
+            print('*' * n)
+
+    size = int(input("Enter size of square: "))
+    square_pattern(size)
+    ```
+
+3. **Pyramid Pattern**
+    ```python
+    def pyramid_pattern(n):
+        for i in range(n):
+            print(' ' * (n - i - 1) + '*' * (2 * i + 1))
+
+    levels = int(input("Enter number of levels: "))
+    pyramid_pattern(levels)
+    ```
+
+4. **Diamond Pattern**
+    ```python
+    def diamond_pattern(n):
+        for i in range(n):
+            print(' ' * (n - i - 1) + '*' * (2 * i + 1))
+        for i in range(n - 2, -1, -1):
+            print(' ' * (n - i - 1) + '*' * (2 * i + 1))
+
+    size = int(input("Enter size of diamond: "))
+    diamond_pattern(size)
+    ```
+
+5. **Pascal's Triangle**
+    ```python
+    def pascal_triangle(n):
+        result = []
+        for i in range(n):
+            row = [1] * (i + 1)
+            for j in range(1, i):
+                row[j] = result[i - 1][j - 1] + result[i - 1][j]
+            result.append(row)
+        
+        for row in result:
+            print(' '.join(map(str, row)))
+
+    rows = int(input("Enter number of rows: "))
+    pascal_triangle(rows)
+    ```
+
+6. **Inverted Pyramid Pattern**
+    ```python
+    def inverted_pyramid(n):
+        for i in range(n, 0, -1):
+            print(' ' * (n - i) + '*' * (2 * i - 1))
+
+    size = int(input("Enter size of inverted pyramid: "))
+    inverted_pyramid(size)
+    ```
+
+7. **Butterfly Pattern**
+    ```python
+    def butterfly_pattern(n):
+        for i in range(n):
+            print('*' * (i + 1) + ' ' * (2 * (n - i - 1)) + '*' * (i + 1))
+        for i in range(n, 0, -1):
+            print('*' * i + ' ' * (2 * (n - i)) + '*' * i)
+
+    size = int(input("Enter size of butterfly pattern: "))
+    butterfly_pattern(size)
+    ```
+
+8. **Number Pyramid Pattern**
+    ```python
+    def number_pyramid(n):
+        for i in range(1, n + 1):
+            print(' ' * (n - i) + ' '.join(str(j) for j in range(1, i + 1)))
+
+    levels = int(input("Enter number of levels: "))
+    number_pyramid(levels)
+    ```
+
+9. **Star Square Pattern**
+    ```python
+    def star_square(n):
+        for i in range(n):
+            print('* ' * n)
+
+    size = int(input("Enter size of star square: "))
+    star_square(size)
+    ```
+
+10. **Hollow Square Pattern**
+    ```python
+    def hollow_square(n):
+        for i in range(n):
+            if i == 0 or i == n - 1:
+                print('*' * n)
+            else:
+                print('*' + ' ' * (n - 2) + '*')
+
+    size = int(input("Enter size of hollow square: "))
+    hollow_square(size)
+    ```
+
+These programs and patterns cover a wide range of basic programming concepts and are great for practice. If you have specific patterns or programs in mind or need further clarification, just let me know!
+
+
+Certainly! Here are more basic programs and patterns for Python:
+
+### Basic Programs (Continued)
+
+11. **Check if a Number is Even or Odd**
+    ```python
+    def check_even_odd(num):
+        return "Even" if num % 2 == 0 else "Odd"
+
+    number = int(input("Enter a number: "))
+    print(f"The number is {check_even_odd(number)}")
+    ```
+
+12. **Sum of Natural Numbers**
+    ```python
+    def sum_of_natural_numbers(n):
+        return n * (n + 1) // 2
+
+    num = int(input("Enter a number: "))
+    print(f"The sum of natural numbers up to {num} is {sum_of_natural_numbers(num)}")
+    ```
+
+13. **Count Vowels in a String**
+    ```python
+    def count_vowels(s):
+        vowels = 'aeiouAEIOU'
+        return sum(1 for char in s if char in vowels)
+
+    string = input("Enter a string: ")
+    print(f"Number of vowels in the string: {count_vowels(string)}")
+    ```
+
+14. **Convert Temperature from Celsius to Fahrenheit**
+    ```python
+    def celsius_to_fahrenheit(celsius):
+        return (celsius * 9/5) + 32
+
+    celsius = float(input("Enter temperature in Celsius: "))
+    print(f"Temperature in Fahrenheit: {celsius_to_fahrenheit(celsius)}")
+    ```
+
+15. **Find the Length of a String**
+    ```python
+    def string_length(s):
+        return len(s)
+
+    string = input("Enter a string: ")
+    print(f"Length of the string is {string_length(string)}")
+    ```
+
+16. **Remove Duplicates from a List**
+    ```python
+    def remove_duplicates(lst):
+        return list(set(lst))
+
+    lst = [int(x) for x in input("Enter numbers separated by space: ").split()]
+    print(f"List after removing duplicates: {remove_duplicates(lst)}")
+    ```
+
+17. **Sort a List in Ascending Order**
+    ```python
+    def sort_list(lst):
+        return sorted(lst)
+
+    lst = [int(x) for x in input("Enter numbers separated by space: ").split()]
+    print(f"Sorted list: {sort_list(lst)}")
+    ```
+
+18. **Find the Minimum and Maximum of a List**
+    ```python
+    def find_min_max(lst):
+        return min(lst), max(lst)
+
+    lst = [int(x) for x in input("Enter numbers separated by space: ").split()]
+    min_val, max_val = find_min_max(lst)
+    print(f"Minimum value: {min_val}")
+    print(f"Maximum value: {max_val}")
+    ```
+
+19. **Check if a String is a Palindrome**
+    ```python
+    def is_palindrome(s):
+        return s == s[::-1]
+
+    string = input("Enter a string: ")
+    if is_palindrome(string):
+        print("The string is a palindrome.")
+    else:
+        print("The string is not a palindrome.")
+    ```
+
+20. **Find the Sum of Digits of a Number**
+    ```python
+    def sum_of_digits(num):
+        return sum(int(digit) for digit in str(num))
+
+    number = int(input("Enter a number: "))
+    print(f"The sum of digits is {sum_of_digits(number)}")
+    ```
+
+### Patterns (Continued)
+
+11. **Right-Angled Triangle with Numbers**
+    ```python
+    def right_angled_triangle_numbers(n):
+        for i in range(1, n + 1):
+            print(' '.join(str(x) for x in range(1, i + 1)))
+
+    rows = int(input("Enter number of rows: "))
+    right_angled_triangle_numbers(rows)
+    ```
+
+12. **Reverse Right-Angled Triangle Pattern**
+    ```python
+    def reverse_right_angled_triangle(n):
+        for i in range(n, 0, -1):
+            print('*' * i)
+
+    rows = int(input("Enter number of rows: "))
+    reverse_right_angled_triangle(rows)
+    ```
+
+13. **Diamond Pattern with Numbers**
+    ```python
+    def diamond_pattern_numbers(n):
+        for i in range(1, n + 1):
+            print(' ' * (n - i) + ' '.join(str(x) for x in range(1, i + 1)))
+        for i in range(n - 1, 0, -1):
+            print(' ' * (n - i) + ' '.join(str(x) for x in range(1, i + 1)))
+
+    size = int(input("Enter size of diamond: "))
+    diamond_pattern_numbers(size)
+    ```
+
+14. **Checkerboard Pattern**
+    ```python
+    def checkerboard_pattern(n):
+        for i in range(n):
+            for j in range(n):
+                if (i + j) % 2 == 0:
+                    print('*', end=' ')
+                else:
+                    print(' ', end=' ')
+            print()
+
+    size = int(input("Enter size of checkerboard: "))
+    checkerboard_pattern(size)
+    ```
+
+15. **Inverted Pyramid with Numbers**
+    ```python
+    def inverted_pyramid_numbers(n):
+        for i in range(n, 0, -1):
+            print(' '.join(str(x) for x in range(1, i + 1)))
+
+    size = int(input("Enter size of inverted pyramid: "))
+    inverted_pyramid_numbers(size)
+    ```
+
+16. **Hollow Diamond Pattern**
+    ```python
+    def hollow_diamond(n):
+        for i in range(1, n + 1):
+            print(' ' * (n - i) + '*' + ' ' * (2 * i - 3) + '*' * (i > 1))
+        for i in range(n - 1, 0, -1):
+            print(' ' * (n - i) + '*' + ' ' * (2 * i - 3) + '*' * (i > 1))
+
+    size = int(input("Enter size of hollow diamond: "))
+    hollow_diamond(size)
+    ```
+
+17. **Half Diamond Pattern**
+    ```python
+    def half_diamond(n):
+        for i in range(1, n + 1):
+            print('*' * i)
+        for i in range(n - 1, 0, -1):
+            print('*' * i)
+
+    size = int(input("Enter size of half diamond: "))
+    half_diamond(size)
+    ```
+
+18. **Number Pyramid with Custom Characters**
+    ```python
+    def custom_pyramid(n, char):
+        for i in range(n):
+            print(' ' * (n - i - 1) + char * (2 * i + 1))
+
+    levels = int(input("Enter number of levels: "))
+    character = input("Enter character: ")
+    custom_pyramid(levels, character)
+    ```
+
+19. **Hollow Pyramid Pattern**
+    ```python
+    def hollow_pyramid(n):
+        for i in range(n):
+            if i == n - 1:
+                print('*' * (2 * n - 1))
+            else:
+                print(' ' * (n - i - 1) + '*' + ' ' * (2 * i - 1) + '*')
+
+    size = int(input("Enter size of hollow pyramid: "))
+    hollow_pyramid(size)
+    ```
+
+20. **Star Shape Pattern**
+    ```python
+    def star_shape(n):
+        for i in range(n):
+            print(' ' * (n - i - 1) + '*' + ' ' * (2 * i) + '*')
+        for i in range(n - 2, -1, -1):
+            print(' ' * (n - i - 1) + '*' + ' ' * (2 * i) + '*')
+
+    size = int(input("Enter size of star shape: "))
+    star_shape(size)
+    ```
+
+These programs and patterns cover a broad range of fundamental concepts and are useful for practice and learning. If you need more examples or explanations, feel free to ask!
+
+
+Sure! Let’s continue with more basic programs and patterns in Python:
+
+### Basic Programs (Continued)
+
+21. **Find the Greatest Common Divisor (GCD)**
+    ```python
+    import math
+
+    def gcd(a, b):
+        return math.gcd(a, b)
+
+    num1 = int(input("Enter first number: "))
+    num2 = int(input("Enter second number: "))
+    print(f"The GCD of {num1} and {num2} is {gcd(num1, num2)}")
+    ```
+
+22. **Convert a Number to Binary**
+    ```python
+    def to_binary(n):
+        return bin(n)[2:]
+
+    number = int(input("Enter a number: "))
+    print(f"Binary representation: {to_binary(number)}")
+    ```
+
+23. **Calculate Power of a Number**
+    ```python
+    def power(base, exp):
+        return base ** exp
+
+    base = float(input("Enter the base: "))
+    exp = int(input("Enter the exponent: "))
+    print(f"{base} raised to the power {exp} is {power(base, exp)}")
+    ```
+
+24. **Check if a Number is Perfect**
+    ```python
+    def is_perfect(n):
+        return sum(i for i in range(1, n) if n % i == 0) == n
+
+    number = int(input("Enter a number: "))
+    if is_perfect(number):
+        print(f"{number} is a perfect number.")
+    else:
+        print(f"{number} is not a perfect number.")
+    ```
+
+25. **Generate a Random Number in a Range**
+    ```python
+    import random
+
+    def generate_random(start, end):
+        return random.randint(start, end)
+
+    start = int(input("Enter the start of the range: "))
+    end = int(input("Enter the end of the range: "))
+    print(f"Random number between {start} and {end}: {generate_random(start, end)}")
+    ```
+
+26. **Find the Sum of Even Numbers in a List**
+    ```python
+    def sum_of_even_numbers(lst):
+        return sum(num for num in lst if num % 2 == 0)
+
+    lst = [int(x) for x in input("Enter numbers separated by space: ").split()]
+    print(f"Sum of even numbers: {sum_of_even_numbers(lst)}")
+    ```
+
+27. **Check if a Number is a Palindrome**
+    ```python
+    def is_palindrome_number(n):
+        return str(n) == str(n)[::-1]
+
+    number = int(input("Enter a number: "))
+    if is_palindrome_number(number):
+        print(f"{number} is a palindrome.")
+    else:
+        print(f"{number} is not a palindrome.")
+    ```
+
+28. **Generate a List of Fibonacci Numbers**
+    ```python
+    def fibonacci_list(n):
+        a, b = 0, 1
+        result = []
+        while len(result) < n:
+            result.append(a)
+            a, b = b, a + b
+        return result
+
+    num = int(input("Enter the number of terms: "))
+    print(f"Fibonacci sequence: {fibonacci_list(num)}")
+    ```
+
+29. **Find the Frequency of Characters in a String**
+    ```python
+    from collections import Counter
+
+    def char_frequency(s):
+        return dict(Counter(s))
+
+    string = input("Enter a string: ")
+    print(f"Character frequencies: {char_frequency(string)}")
+    ```
+
+30. **Calculate Simple Interest**
+    ```python
+    def simple_interest(principal, rate, time):
+        return (principal * rate * time) / 100
+
+    principal = float(input("Enter principal amount: "))
+    rate = float(input("Enter annual interest rate (in %): "))
+    time = float(input("Enter time (in years): "))
+    print(f"Simple interest: {simple_interest(principal, rate, time)}")
+    ```
+
+### Patterns (Continued)
+
+21. **Right-Angled Triangle with Digits**
+    ```python
+    def right_angled_triangle_digits(n):
+        for i in range(1, n + 1):
+            print(' '.join(str(x) for x in range(1, i + 1)))
+
+    rows = int(input("Enter number of rows: "))
+    right_angled_triangle_digits(rows)
+    ```
+
+22. **Hollow Right-Angled Triangle**
+    ```python
+    def hollow_right_angled_triangle(n):
+        for i in range(n):
+            if i == n - 1:
+                print('*' * (i + 1))
+            else:
+                print('*' + ' ' * i + '*')
+
+    rows = int(input("Enter number of rows: "))
+    hollow_right_angled_triangle(rows)
+    ```
+
+23. **Pyramid Pattern with Digits**
+    ```python
+    def pyramid_pattern_digits(n):
+        for i in range(1, n + 1):
+            print(' ' * (n - i) + ''.join(str(x) for x in range(1, i + 1)))
+
+    levels = int(input("Enter number of levels: "))
+    pyramid_pattern_digits(levels)
+    ```
+
+24. **Inverted Pyramid with Characters**
+    ```python
+    def inverted_pyramid_char(n, char):
+        for i in range(n, 0, -1):
+            print(char * i)
+
+    size = int(input("Enter size of inverted pyramid: "))
+    character = input("Enter character: ")
+    inverted_pyramid_char(size, character)
+    ```
+
+25. **Star Pattern with Border**
+    ```python
+    def bordered_star_pattern(n):
+        for i in range(n):
+            if i == 0 or i == n - 1:
+                print('*' * n)
+            else:
+                print('*' + ' ' * (n - 2) + '*')
+
+    size = int(input("Enter size of bordered star pattern: "))
+    bordered_star_pattern(size)
+    ```
+
+26. **Diamond Pattern with Characters**
+    ```python
+    def diamond_pattern_char(n, char):
+        for i in range(1, n + 1):
+            print(' ' * (n - i) + char * (2 * i - 1))
+        for i in range(n - 1, 0, -1):
+            print(' ' * (n - i) + char * (2 * i - 1))
+
+    size = int(input("Enter size of diamond: "))
+    character = input("Enter character: ")
+    diamond_pattern_char(size, character)
+    ```
+
+27. **Star Triangle with Alignment**
+    ```python
+    def star_triangle(n):
+        for i in range(1, n + 1):
+            print(' ' * (n - i) + '*' * i)
+
+    size = int(input("Enter size of star triangle: "))
+    star_triangle(size)
+    ```
+
+28. **Alphabet Pyramid Pattern**
+    ```python
+    def alphabet_pyramid(n):
+        for i in range(n):
+            print(' ' * (n - i - 1) + ''.join(chr(65 + j) for j in range(i + 1)))
+
+    levels = int(input("Enter number of levels: "))
+    alphabet_pyramid(levels)
+    ```
+
+29. **Number Square Pattern**
+    ```python
+    def number_square(n):
+        for i in range(n):
+            print(' '.join(str(n) for _ in range(n)))
+
+    size = int(input("Enter size of number square: "))
+    number_square(size)
+    ```
+
+30. **Hollow Diamond with Numbers**
+    ```python
+    def hollow_diamond_numbers(n):
+        for i in range(1, n + 1):
+            if i == 1 or i == n:
+                print(' ' * (n - i) + '1')
+            else:
+                print(' ' * (n - i) + '1' + ' ' * (2 * (i - 1) - 1) + '1')
+        for i in range(n - 1, 0, -1):
+            if i == 1:
+                print(' ' * (n - i) + '1')
+            else:
+                print(' ' * (n - i) + '1' + ' ' * (2 * (i - 1) - 1) + '1')
+
+    size = int(input("Enter size of hollow diamond: "))
+    hollow_diamond_numbers(size)
+    ```
+
+These additional examples cover various fundamental concepts and patterns in programming. If you need further assistance or have specific requests, feel free to let me know!
+
+Certainly! Here are some more basic Python programs with different tasks similar to finding Fibonacci numbers or checking prime numbers, but with a variety of functionalities:
+
+### Additional Basic Programs
+
+1. **Generate a List of Prime Numbers up to a Given Number**
+    ```python
+    def generate_primes(n):
+        primes = []
+        for num in range(2, n + 1):
+            if all(num % i != 0 for i in range(2, int(num**0.5) + 1)):
+                primes.append(num)
+        return primes
+
+    limit = int(input("Enter the limit for prime numbers: "))
+    print(f"Prime numbers up to {limit}: {generate_primes(limit)}")
+    ```
+
+2. **Generate a List of Fibonacci Numbers up to a Given Number**
+    ```python
+    def fibonacci_up_to(n):
+        fib_sequence = [0, 1]
+        while fib_sequence[-1] + fib_sequence[-2] <= n:
+            fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
+        return fib_sequence
+
+    limit = int(input("Enter the upper limit for Fibonacci sequence: "))
+    print(f"Fibonacci sequence up to {limit}: {fibonacci_up_to(limit)}")
+    ```
+
+3. **Find the Sum of Squares of First n Natural Numbers**
+    ```python
+    def sum_of_squares(n):
+        return sum(i**2 for i in range(1, n + 1))
+
+    num = int(input("Enter a number: "))
+    print(f"Sum of squares of first {num} natural numbers is {sum_of_squares(num)}")
+    ```
+
+4. **Find the Sum of Cubes of First n Natural Numbers**
+    ```python
+    def sum_of_cubes(n):
+        return sum(i**3 for i in range(1, n + 1))
+
+    num = int(input("Enter a number: "))
+    print(f"Sum of cubes of first {num} natural numbers is {sum_of_cubes(num)}")
+    ```
+
+5. **Check if a Number is Armstrong Number**
+    ```python
+    def is_armstrong(n):
+        num_str = str(n)
+        power = len(num_str)
+        return n == sum(int(digit) ** power for digit in num_str)
+
+    number = int(input("Enter a number: "))
+    if is_armstrong(number):
+        print(f"{number} is an Armstrong number.")
+    else:
+        print(f"{number} is not an Armstrong number.")
+    ```
+
+6. **Calculate the Area of Different Shapes (Circle, Rectangle, Triangle)**
+    ```python
+    import math
+
+    def area_circle(radius):
+        return math.pi * radius ** 2
+
+    def area_rectangle(length, width):
+        return length * width
+
+    def area_triangle(base, height):
+        return 0.5 * base * height
+
+    shape = input("Enter the shape (circle/rectangle/triangle): ").lower()
+    
+    if shape == 'circle':
+        radius = float(input("Enter the radius: "))
+        print(f"Area of the circle: {area_circle(radius)}")
+    elif shape == 'rectangle':
+        length = float(input("Enter the length: "))
+        width = float(input("Enter the width: "))
+        print(f"Area of the rectangle: {area_rectangle(length, width)}")
+    elif shape == 'triangle':
+        base = float(input("Enter the base: "))
+        height = float(input("Enter the height: "))
+        print(f"Area of the triangle: {area_triangle(base, height)}")
+    else:
+        print("Invalid shape!")
+    ```
+
+7. **Find the Sum of Digits of a Number (Alternative Method)**
+    ```python
+    def sum_of_digits_alternative(n):
+        total = 0
+        while n > 0:
+            total += n % 10
+            n //= 10
+        return total
+
+    number = int(input("Enter a number: "))
+    print(f"The sum of digits is {sum_of_digits_alternative(number)}")
+    ```
+
+8. **Count the Number of Words in a String**
+    ```python
+    def count_words(s):
+        return len(s.split())
+
+    string = input("Enter a string: ")
+    print(f"Number of words in the string: {count_words(string)}")
+    ```
+
+9. **Find the LCM (Least Common Multiple) of Two Numbers**
+    ```python
+    import math
+
+    def lcm(a, b):
+        return abs(a * b) // math.gcd(a, b)
+
+    num1 = int(input("Enter first number: "))
+    num2 = int(input("Enter second number: "))
+    print(f"The LCM of {num1} and {num2} is {lcm(num1, num2)}")
+    ```
+
+10. **Check if a String Contains Only Digits**
+    ```python
+    def contains_only_digits(s):
+        return s.isdigit()
+
+    string = input("Enter a string: ")
+    if contains_only_digits(string):
+        print("The string contains only digits.")
+    else:
+        print("The string does not contain only digits.")
+    ```
+
+### Additional Patterns
+
+31. **Right-Angled Triangle with Alphabet**
+    ```python
+    def right_angled_triangle_alpha(n):
+        for i in range(1, n + 1):
+            print(' '.join(chr(64 + j) for j in range(1, i + 1)))
+
+    rows = int(input("Enter number of rows: "))
+    right_angled_triangle_alpha(rows)
+    ```
+
+32. **Number Pyramid with Custom Base**
+    ```python
+    def number_pyramid_custom(n, base):
+        for i in range(1, n + 1):
+            print(' ' * (n - i) + ''.join(str(base + j) for j in range(i)))
+
+    levels = int(input("Enter number of levels: "))
+    base = int(input("Enter base number: "))
+    number_pyramid_custom(levels, base)
+    ```
+
+33. **Triangle Pattern with Stars and Spaces**
+    ```python
+    def star_triangle_spaces(n):
+        for i in range(1, n + 1):
+            print('*' * i + ' ' * (n - i))
+
+    size = int(input("Enter size of star triangle: "))
+    star_triangle_spaces(size)
+    ```
+
+34. **Hollow Square with Custom Character**
+    ```python
+    def hollow_square_char(n, char):
+        for i in range(n):
+            if i == 0 or i == n - 1:
+                print(char * n)
+            else:
+                print(char + ' ' * (n - 2) + char)
+
+    size = int(input("Enter size of hollow square: "))
+    character = input("Enter character: ")
+    hollow_square_char(size, character)
+    ```
+
+35. **Alphabet Diamond Pattern**
+    ```python
+    def alphabet_diamond(n):
+        for i in range(n):
+            print(' ' * (n - i - 1) + ''.join(chr(65 + j) for j in range(i + 1)))
+        for i in range(n - 2, -1, -1):
+            print(' ' * (n - i - 1) + ''.join(chr(65 + j) for j in range(i + 1)))
+
+    size = int(input("Enter size of alphabet diamond: "))
+    alphabet_diamond(size)
+    ```
+
+36. **Number Diamond Pattern**
+    ```python
+    def number_diamond(n):
+        for i in range(1, n + 1):
+            print(' ' * (n - i) + ''.join(str(j) for j in range(1, i + 1)))
+        for i in range(n - 1, 0, -1):
+            print(' ' * (n - i) + ''.join(str(j) for j in range(1, i + 1)))
+
+    size = int(input("Enter size of number diamond: "))
+    number_diamond(size)
+    ```
+
+37. **Inverted Star Pyramid**
+    ```python
+    def inverted_star_pyramid(n):
+        for i in range(n, 0, -1):
+            print(' ' * (n - i) + '*' * (2 * i - 1))
+
+    size = int(input("Enter size of inverted star pyramid: "))
+    inverted_star_pyramid(size)
+    ```
+
+38. **Hollow Diamond with Stars**
+    ```python
+    def hollow_diamond_star(n):
+        for i in range(n):
+            if i == 0 or i == n - 1:
+                print(' ' * (n - i - 1) + '*')
+            else:
+                print(' ' * (n - i - 1) + '*' + ' ' * (2 * i - 1) + '*')
+        for i in range(n - 2, -1, -1):
+            if i == 0 or i == n - 1:
+                print(' ' * (n - i - 1) + '*')
+            else:
+                print(' ' * (n - i - 1) + '*' + ' ' * (2 * i - 1) + '*')
+
+    size = int(input("Enter size of hollow diamond: "))
+    hollow_diamond_star(size)
+    ```
+
+39. **Alphabet Square Pattern**
+    ```python
+    def alphabet_square(n):
+        for i in range(n):
+            print(' '.join(chr(65 + i) for _ in range(n)))
+
+    size = int(input("Enter size of alphabet square: "))
+    alphabet_square(size)
+    ```
+
+40. **Right-Angled Triangle with Numbers (Reverse)**
+    ```python
+    def reverse_right_angled_triangle_numbers(n):
+        for i in
+
+ range(n, 0, -1):
+            print(' '.join(str(x) for x in range(1, i + 1)))
+
+    rows = int(input("Enter number of rows: "))
+    reverse_right_angled_triangle_numbers(rows)
+    ```
+
+These examples should give you a broad range of basic programming tasks and patterns to practice with. If you need any further details or additional examples, just let me know!
